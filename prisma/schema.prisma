@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Check {
+  id             String   @id @default(uuid())
+  query          String
+  language       String
+
+  verdict        String
+  confidence     Int
+  summary        String
+  explanation    String
+
+  sources        Json
+  keySources     Json
+  factCheckHits  Json?
+  contradictions Json?
+
+  createdAt      DateTime @default(now())
+  processingMs   Int
+
+  @@index([createdAt])
+}
