@@ -61,6 +61,7 @@ export async function extractClaim(query: string, language: LanguageCode): Promi
     try {
       const completion = await llm.chat.completions.create({
         model: LLM_MODEL,
+        max_tokens: 1024,
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
           { role: 'user', content: userMessage },

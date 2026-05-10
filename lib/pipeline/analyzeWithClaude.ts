@@ -125,6 +125,7 @@ export async function analyzeWithClaude(
     try {
       const completion = await llm.chat.completions.create({
         model: LLM_MODEL,
+        max_tokens: 4096,
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
           { role: 'user', content: userMessage },
