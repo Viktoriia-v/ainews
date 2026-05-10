@@ -1,20 +1,29 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Inter, Instrument_Serif, JetBrains_Mono } from 'next/font/google';
+import './globals.css';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const inter = Inter({
+  subsets: ['latin', 'latin-ext', 'cyrillic', 'cyrillic-ext'],
+  variable: '--font-inter',
+  weight: ['400', '500', '600', '700'],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const instrumentSerif = Instrument_Serif({
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-instrument-serif',
+  weight: ['400'],
+  style: ['normal', 'italic'],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin', 'latin-ext', 'cyrillic', 'cyrillic-ext'],
+  variable: '--font-jetbrains-mono',
+  weight: ['400', '500'],
 });
 
 export const metadata: Metadata = {
-  title: "AI Fact Checker",
-  description: "Check news and statements with AI — multilingual fact-checking",
+  title: 'Verity — AI Fact-checker',
+  description: 'Fact-checking through cross-source comparison',
 };
 
 export default function RootLayout({
@@ -25,7 +34,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

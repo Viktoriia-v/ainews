@@ -63,6 +63,9 @@ export const translations: Record<LanguageCode, Record<TranslationKey, string>> 
   de: en,
   it: en,
   es: en,
+  pt: en,
+  tr: en,
+  ja: en,
 };
 
 export function t(key: TranslationKey, lang: LanguageCode = 'en'): string {
