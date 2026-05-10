@@ -1,57 +1,35 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import {
-  detectBrowserLang,
-  I18N,
-  type UIStrings,
-} from '@/lib/i18n/dictionary';
-import {
-  isLanguageCode,
-  type LanguageCode,
-} from '@/lib/i18n/languages';
+import { useState } from 'react';
+import { I18N, type UIStrings } from '@/lib/i18n/dictionary';
+import type { LanguageCode } from '@/lib/i18n/languages';
 import { Hero } from './Hero';
 import { LoadingPanel } from './LoadingPanel';
 import { ResultPanel } from './ResultPanel';
 import { ShareModal } from './ShareModal';
 import { adaptResult, type ApiPayload, type DisplayResult } from './adapter';
-
-const LANG_STORAGE_KEY = 'verity:lang';
+import { persistLang } from './langClient';
 
 type AppState = 'empty' | 'loading' | 'result';
 
-export function VerityApp() {
-  const [lang, setLangRaw] = useState<LanguageCode>('en');
-  const [autoDetected, setAutoDetected] = useState(false);
+interface Props {
+  initialLang: LanguageCode;
+  initialAutoDetected: boolean;
+}
+
+export function VerityApp({ initialLang, initialAutoDetected }: Props) {
+  const [lang, setLangRaw] = useState<LanguageCode>(initialLang);
+  const [autoDetected, setAutoDetected] = useState(initialAutoDetected);
   const [state, setState] = useState<AppState>('empty');
   const [activeQuery, setActiveQuery] = useState('');
   const [result, setResult] = useState<DisplayResult | null>(null);
   const [shareOpen, setShareOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    try {
-      const saved = window.localStorage.getItem(LANG_STORAGE_KEY);
-      if (saved && isLanguageCode(saved)) {
-        setLangRaw(saved);
-        return;
-      }
-    } catch {
-      /* noop */
-    }
-    const detected = detectBrowserLang();
-    setLangRaw(detected);
-    setAutoDetected(true);
-  }, []);
-
   const setLang = (l: LanguageCode) => {
-    setAutoDetected(false);
     setLangRaw(l);
-    try {
-      window.localStorage.setItem(LANG_STORAGE_KEY, l);
-    } catch {
-      /* noop */
-    }
+    setAutoDetected(false);
+    persistLang(l);
   };
 
   const t: UIStrings = I18N[lang];

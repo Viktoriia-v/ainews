@@ -1,57 +1,31 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { I18N, type UIStrings } from '@/lib/i18n/dictionary';
 import {
-  detectBrowserLang,
-  I18N,
-  type UIStrings,
-} from '@/lib/i18n/dictionary';
-import {
-  isLanguageCode,
+  SUPPORTED_LANGUAGES,
   type LanguageCode,
 } from '@/lib/i18n/languages';
 import { ResultPanel } from './ResultPanel';
 import { ShareModal } from './ShareModal';
 import type { DisplayResult } from './adapter';
-
-const LANG_STORAGE_KEY = 'verity:lang';
+import { persistLang } from './langClient';
 
 export function SharedResult({
   result,
-  initialLang,
+  uiLang,
+  checkLang,
 }: {
   result: DisplayResult;
-  initialLang: LanguageCode;
+  uiLang: LanguageCode;
+  checkLang: LanguageCode;
 }) {
-  const [lang, setLangRaw] = useState<LanguageCode>(initialLang);
-  const [autoDetected, setAutoDetected] = useState(false);
+  const [lang, setLangRaw] = useState<LanguageCode>(uiLang);
   const [shareOpen, setShareOpen] = useState(false);
 
-  useEffect(() => {
-    try {
-      const saved = window.localStorage.getItem(LANG_STORAGE_KEY);
-      if (saved && isLanguageCode(saved)) {
-        setLangRaw(saved);
-        return;
-      }
-    } catch {
-      /* noop */
-    }
-    const detected = detectBrowserLang();
-    if (detected !== initialLang) {
-      setLangRaw(detected);
-      setAutoDetected(true);
-    }
-  }, [initialLang]);
-
   const setLang = (l: LanguageCode) => {
-    setAutoDetected(false);
     setLangRaw(l);
-    try {
-      window.localStorage.setItem(LANG_STORAGE_KEY, l);
-    } catch {
-      /* noop */
-    }
+    persistLang(l);
   };
 
   const t: UIStrings = I18N[lang];
@@ -59,6 +33,11 @@ export function SharedResult({
     typeof window !== 'undefined'
       ? `${window.location.origin}/check/${result.id}`
       : `/check/${result.id}`;
+
+  const checkLangName =
+    SUPPORTED_LANGUAGES.find((l) => l.code === checkLang)?.nativeName ??
+    checkLang.toUpperCase();
+  const showAnalyzedBadge = lang !== checkLang;
 
   return (
     <div
@@ -71,6 +50,47 @@ export function SharedResult({
         flexDirection: 'column',
       }}
     >
+      {showAnalyzedBadge && (
+        <div
+          style={{
+            maxWidth: 880,
+            margin: '20px auto 0',
+            width: '100%',
+            padding: '0 32px',
+            fontFamily: 'var(--font-inter), Inter, sans-serif',
+          }}
+        >
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              padding: '6px 12px',
+              borderRadius: 999,
+              background: 'oklch(0.95 0.01 80)',
+              border: '1px solid oklch(0.88 0.04 80)',
+              color: '#7a5b1a',
+              fontSize: 11,
+              fontWeight: 500,
+            }}
+          >
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 8v4M12 16h.01" />
+            </svg>
+            {t.analyzedIn}: <b style={{ fontWeight: 600 }}>{checkLangName}</b>
+          </div>
+        </div>
+      )}
       <ResultPanel
         t={t}
         result={result}
@@ -78,7 +98,6 @@ export function SharedResult({
         onLang={setLang}
         onReset={undefined}
         onShare={() => setShareOpen(true)}
-        autoDetected={autoDetected}
       />
       <div
         style={{

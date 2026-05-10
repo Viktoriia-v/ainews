@@ -36,6 +36,11 @@ export interface UIStrings {
   errorTooShort: string;
   errorGeneric: string;
   errorNetwork: string;
+  searchLanguagePlaceholder: string;
+  noMatches: string;
+  autoBadge: string;
+  analyzedIn: string;
+  notFound: string;
 }
 
 export const I18N: Record<LanguageCode, UIStrings> = {
@@ -91,6 +96,11 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     errorTooShort: 'Please enter at least 5 characters',
     errorGeneric: 'Something went wrong. Please try again.',
     errorNetwork: 'Network error — please try again',
+    searchLanguagePlaceholder: 'Search language…',
+    noMatches: 'No matches',
+    autoBadge: 'auto',
+    analyzedIn: 'Analyzed in',
+    notFound: 'Result not found',
   },
   ru: {
     productName: 'Verity',
@@ -144,6 +154,11 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     errorTooShort: 'Введите минимум 5 символов',
     errorGeneric: 'Что-то пошло не так. Попробуйте ещё раз.',
     errorNetwork: 'Ошибка сети — попробуйте ещё раз',
+    searchLanguagePlaceholder: 'Поиск языка…',
+    noMatches: 'Нет совпадений',
+    autoBadge: 'авто',
+    analyzedIn: 'Проверка на',
+    notFound: 'Результат не найден',
   },
   uk: {
     productName: 'Verity',
@@ -197,6 +212,11 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     errorTooShort: 'Введіть щонайменше 5 символів',
     errorGeneric: 'Щось пішло не так. Спробуйте ще раз.',
     errorNetwork: 'Мережева помилка — спробуйте ще раз',
+    searchLanguagePlaceholder: 'Пошук мови…',
+    noMatches: 'Збігів немає',
+    autoBadge: 'авто',
+    analyzedIn: 'Перевірка',
+    notFound: 'Результат не знайдено',
   },
   lt: {
     productName: 'Verity',
@@ -250,6 +270,11 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     errorTooShort: 'Įveskite bent 5 simbolius',
     errorGeneric: 'Kažkas nepavyko. Bandykite dar kartą.',
     errorNetwork: 'Tinklo klaida — bandykite dar kartą',
+    searchLanguagePlaceholder: 'Ieškoti kalbos…',
+    noMatches: 'Nėra atitikmenų',
+    autoBadge: 'auto',
+    analyzedIn: 'Patikrinta',
+    notFound: 'Rezultatas nerastas',
   },
   de: {
     productName: 'Verity',
@@ -303,6 +328,11 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     errorTooShort: 'Bitte mindestens 5 Zeichen eingeben',
     errorGeneric: 'Etwas ist schiefgelaufen. Bitte erneut versuchen.',
     errorNetwork: 'Netzwerkfehler — bitte erneut versuchen',
+    searchLanguagePlaceholder: 'Sprache suchen…',
+    noMatches: 'Keine Treffer',
+    autoBadge: 'auto',
+    analyzedIn: 'Analysiert in',
+    notFound: 'Ergebnis nicht gefunden',
   },
   fr: {
     productName: 'Verity',
@@ -356,6 +386,11 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     errorTooShort: 'Entrez au moins 5 caractères',
     errorGeneric: 'Une erreur est survenue. Réessayez.',
     errorNetwork: 'Erreur réseau — réessayez',
+    searchLanguagePlaceholder: 'Rechercher une langue…',
+    noMatches: 'Aucun résultat',
+    autoBadge: 'auto',
+    analyzedIn: 'Analysé en',
+    notFound: 'Résultat introuvable',
   },
   es: {
     productName: 'Verity',
@@ -409,6 +444,11 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     errorTooShort: 'Introduce al menos 5 caracteres',
     errorGeneric: 'Algo salió mal. Inténtalo de nuevo.',
     errorNetwork: 'Error de red — inténtalo de nuevo',
+    searchLanguagePlaceholder: 'Buscar idioma…',
+    noMatches: 'Sin coincidencias',
+    autoBadge: 'auto',
+    analyzedIn: 'Analizado en',
+    notFound: 'Resultado no encontrado',
   },
   it: {
     productName: 'Verity',
@@ -461,6 +501,11 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     errorTooShort: 'Inserisci almeno 5 caratteri',
     errorGeneric: 'Qualcosa è andato storto. Riprova.',
     errorNetwork: 'Errore di rete — riprova',
+    searchLanguagePlaceholder: 'Cerca lingua…',
+    noMatches: 'Nessuna corrispondenza',
+    autoBadge: 'auto',
+    analyzedIn: 'Analizzato in',
+    notFound: 'Risultato non trovato',
   },
   pl: {
     productName: 'Verity',
@@ -513,6 +558,11 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     errorTooShort: 'Wpisz co najmniej 5 znaków',
     errorGeneric: 'Coś poszło nie tak. Spróbuj ponownie.',
     errorNetwork: 'Błąd sieci — spróbuj ponownie',
+    searchLanguagePlaceholder: 'Szukaj języka…',
+    noMatches: 'Brak dopasowań',
+    autoBadge: 'auto',
+    analyzedIn: 'Analizowane w',
+    notFound: 'Nie znaleziono wyniku',
   },
   pt: {
     productName: 'Verity',
@@ -565,6 +615,11 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     errorTooShort: 'Introduza pelo menos 5 caracteres',
     errorGeneric: 'Algo correu mal. Tente de novo.',
     errorNetwork: 'Erro de rede — tente de novo',
+    searchLanguagePlaceholder: 'Procurar idioma…',
+    noMatches: 'Sem correspondências',
+    autoBadge: 'auto',
+    analyzedIn: 'Analisado em',
+    notFound: 'Resultado não encontrado',
   },
   tr: {
     productName: 'Verity',
@@ -618,6 +673,11 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     errorTooShort: 'Lütfen en az 5 karakter girin',
     errorGeneric: 'Bir şeyler ters gitti. Tekrar deneyin.',
     errorNetwork: 'Ağ hatası — tekrar deneyin',
+    searchLanguagePlaceholder: 'Dil ara…',
+    noMatches: 'Eşleşme yok',
+    autoBadge: 'oto',
+    analyzedIn: 'Analiz dili',
+    notFound: 'Sonuç bulunamadı',
   },
   ja: {
     productName: 'Verity',
@@ -671,15 +731,10 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     errorTooShort: '5文字以上入力してください',
     errorGeneric: '問題が発生しました。もう一度お試しください。',
     errorNetwork: 'ネットワークエラー — 再試行してください',
+    searchLanguagePlaceholder: '言語を検索…',
+    noMatches: '一致なし',
+    autoBadge: '自動',
+    analyzedIn: '分析言語',
+    notFound: '結果が見つかりません',
   },
 };
-
-export function detectBrowserLang(): LanguageCode {
-  if (typeof navigator === 'undefined') return 'en';
-  const codes = [navigator.language, ...(navigator.languages ?? [])].filter(Boolean);
-  for (const raw of codes) {
-    const code = raw.toLowerCase().split('-')[0];
-    if (code in I18N) return code as LanguageCode;
-  }
-  return 'en';
-}

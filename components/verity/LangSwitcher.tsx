@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { SUPPORTED_LANGUAGES, type LanguageCode } from '@/lib/i18n/languages';
+import { I18N } from '@/lib/i18n/dictionary';
 import { SearchIcon } from './atoms';
 
 interface Props {
@@ -17,6 +18,7 @@ export function LangSwitcher({ lang, onLang, pos = 'static', autoDetected = fals
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const current = SUPPORTED_LANGUAGES.find((l) => l.code === lang) ?? SUPPORTED_LANGUAGES[0];
+  const t = I18N[lang];
 
   useEffect(() => {
     if (!open) return;
@@ -103,7 +105,7 @@ export function LangSwitcher({ lang, onLang, pos = 'static', autoDetected = fals
               borderRadius: 3,
             }}
           >
-            auto
+            {t.autoBadge}
           </span>
         )}
         <svg
@@ -152,7 +154,7 @@ export function LangSwitcher({ lang, onLang, pos = 'static', autoDetected = fals
               ref={inputRef}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search language…"
+              placeholder={t.searchLanguagePlaceholder}
               style={{
                 flex: 1,
                 border: 'none',
@@ -167,7 +169,7 @@ export function LangSwitcher({ lang, onLang, pos = 'static', autoDetected = fals
           <div style={{ maxHeight: 280, overflowY: 'auto' }}>
             {filtered.length === 0 && (
               <div style={{ padding: '12px 14px', fontSize: 12, color: '#999' }}>
-                No matches
+                {t.noMatches}
               </div>
             )}
             {filtered.map((l) => {
