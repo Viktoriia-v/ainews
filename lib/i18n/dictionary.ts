@@ -41,6 +41,8 @@ export interface UIStrings {
   autoBadge: string;
   analyzedIn: string;
   notFound: string;
+  reanalyzeIn: string;
+  reanalyzing: string;
 }
 
 export const I18N: Record<LanguageCode, UIStrings> = {
@@ -101,6 +103,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     autoBadge: 'auto',
     analyzedIn: 'Analyzed in',
     notFound: 'Result not found',
+    reanalyzeIn: 'Re-analyze in',
+    reanalyzing: 'Re-analyzing…',
   },
   ru: {
     productName: 'Verity',
@@ -159,6 +163,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     autoBadge: 'авто',
     analyzedIn: 'Проверка на',
     notFound: 'Результат не найден',
+    reanalyzeIn: 'Перепроверить на',
+    reanalyzing: 'Перепроверяем…',
   },
   uk: {
     productName: 'Verity',
@@ -217,6 +223,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     autoBadge: 'авто',
     analyzedIn: 'Перевірка',
     notFound: 'Результат не знайдено',
+    reanalyzeIn: 'Перевірити на',
+    reanalyzing: 'Перевіряємо…',
   },
   lt: {
     productName: 'Verity',
@@ -275,6 +283,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     autoBadge: 'auto',
     analyzedIn: 'Patikrinta',
     notFound: 'Rezultatas nerastas',
+    reanalyzeIn: 'Patikrinti',
+    reanalyzing: 'Tikriname…',
   },
   de: {
     productName: 'Verity',
@@ -333,6 +343,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     autoBadge: 'auto',
     analyzedIn: 'Analysiert in',
     notFound: 'Ergebnis nicht gefunden',
+    reanalyzeIn: 'Erneut prüfen in',
+    reanalyzing: 'Wird erneut geprüft…',
   },
   fr: {
     productName: 'Verity',
@@ -391,6 +403,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     autoBadge: 'auto',
     analyzedIn: 'Analysé en',
     notFound: 'Résultat introuvable',
+    reanalyzeIn: 'Re-vérifier en',
+    reanalyzing: 'Re-vérification…',
   },
   es: {
     productName: 'Verity',
@@ -449,6 +463,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     autoBadge: 'auto',
     analyzedIn: 'Analizado en',
     notFound: 'Resultado no encontrado',
+    reanalyzeIn: 'Re-verificar en',
+    reanalyzing: 'Re-verificando…',
   },
   it: {
     productName: 'Verity',
@@ -506,6 +522,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     autoBadge: 'auto',
     analyzedIn: 'Analizzato in',
     notFound: 'Risultato non trovato',
+    reanalyzeIn: 'Ri-verifica in',
+    reanalyzing: 'Ri-verifica in corso…',
   },
   pl: {
     productName: 'Verity',
@@ -563,6 +581,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     autoBadge: 'auto',
     analyzedIn: 'Analizowane w',
     notFound: 'Nie znaleziono wyniku',
+    reanalyzeIn: 'Sprawdź ponownie w',
+    reanalyzing: 'Ponowna weryfikacja…',
   },
   pt: {
     productName: 'Verity',
@@ -620,6 +640,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     autoBadge: 'auto',
     analyzedIn: 'Analisado em',
     notFound: 'Resultado não encontrado',
+    reanalyzeIn: 'Re-verificar em',
+    reanalyzing: 'A re-verificar…',
   },
   tr: {
     productName: 'Verity',
@@ -678,6 +700,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     autoBadge: 'oto',
     analyzedIn: 'Analiz dili',
     notFound: 'Sonuç bulunamadı',
+    reanalyzeIn: 'Yeniden doğrula',
+    reanalyzing: 'Yeniden doğrulanıyor…',
   },
   ja: {
     productName: 'Verity',
@@ -736,5 +760,7 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     autoBadge: '自動',
     analyzedIn: '分析言語',
     notFound: '結果が見つかりません',
+    reanalyzeIn: '再分析',
+    reanalyzing: '再分析中…',
   },
 };

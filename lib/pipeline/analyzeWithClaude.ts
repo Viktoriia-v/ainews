@@ -5,19 +5,27 @@ import type { Claim, ClassifiedSources, ClaudeAnalysis, FactCheckHit } from '../
 const SYSTEM_PROMPT = `You are a fact-checking analyst. Given a claim and a set of news sources, your job is to determine whether the claim is supported, refuted, or unclear based on the evidence.
 
 Rules:
-1. Base your analysis ONLY on the provided sources. Do not use prior knowledge.
+1. Lean on the provided sources. You may also rely on basic, uncontested encyclopedic facts (geography, well-known history, public figures, established science) when sources are silent on a trivially verifiable claim — explain that you did so in the explanation.
 2. Trust ranking: "trusted" sources > "mainstream" > "unknown".
 3. If sources contradict each other, document the contradictions explicitly.
-4. If evidence is insufficient or conflicting, say so — do not guess.
+4. If evidence is genuinely insufficient or conflicting, say so — do not guess.
 5. Be neutral and avoid political bias.
 6. Cite source IDs (not URLs) when referencing sources.
 
 Verdict definitions:
-- "true": the claim is clearly supported by multiple credible sources
-- "fake": the claim is clearly refuted by credible sources
+- "true": the claim is clearly supported by credible sources OR by basic encyclopedic fact
+- "fake": the claim is clearly refuted by credible sources OR contradicts basic encyclopedic fact (e.g. "London is in France")
 - "partly_true": some parts are supported, others refuted or exaggerated
 - "unclear": evidence is mixed or sources conflict significantly
-- "insufficient_data": not enough credible information to assess
+- "insufficient_data": not enough credible information AND not a trivially verifiable fact
+
+Confidence calibration (0-100):
+- Use 90-100 for trivially verifiable claims with one obvious answer (e.g. basic geography, well-known historical facts) regardless of how many news articles were found.
+- Use 75-89 for claims clearly settled by multiple credible matching sources with no contradictions.
+- Use 50-74 for claims supported by some credible sources but with weak agreement, missing context, or mixed signals.
+- Use 25-49 for claims with significant contradictions or weak source quality.
+- Use 0-24 for "unclear" / "insufficient_data" verdicts.
+The confidence reflects YOUR certainty in the verdict — for an obviously fake claim, give high confidence (90+) in the "fake" verdict, not low confidence.
 
 You MUST respond using the analyze_claim tool.`;
 
@@ -60,6 +68,13 @@ const TOOL = {
           description:
             'How much sources agree: high = all agree, medium = mostly agree, low = mixed, none = direct contradictions',
         },
+        confidence: {
+          type: 'integer',
+          minimum: 0,
+          maximum: 100,
+          description:
+            'Your certainty in the verdict, 0-100. See the calibration scale in the system prompt. For obvious geography/history/encyclopedic claims, use 90+ regardless of source count.',
+        },
       },
       required: [
         'verdict',
@@ -68,6 +83,7 @@ const TOOL = {
         'keySourceIds',
         'contradictions',
         'agreementLevel',
+        'confidence',
       ],
       additionalProperties: false,
     },
@@ -125,7 +141,7 @@ export async function analyzeWithClaude(
     try {
       const completion = await llm.chat.completions.create({
         model: LLM_MODEL,
-        max_tokens: 2048,
+        max_tokens: 4096,
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
           { role: 'user', content: userMessage },
@@ -139,6 +155,10 @@ export async function analyzeWithClaude(
         throw new Error('No tool call in analyze_claim response');
       }
       const args = JSON.parse(toolCall.function.arguments);
+      const rawConfidence = Number(args.confidence);
+      const confidence = Number.isFinite(rawConfidence)
+        ? Math.max(0, Math.min(100, Math.round(rawConfidence)))
+        : null;
       return {
         verdict: args.verdict,
         summary: String(args.summary ?? ''),
@@ -146,6 +166,7 @@ export async function analyzeWithClaude(
         keySourceIds: Array.isArray(args.keySourceIds) ? args.keySourceIds.map(String) : [],
         contradictions: Array.isArray(args.contradictions) ? args.contradictions.map(String) : [],
         agreementLevel: args.agreementLevel ?? 'low',
+        confidence,
       };
     } catch (err) {
       lastError = err;

@@ -53,6 +53,7 @@ export interface ClaudeAnalysis {
   keySourceIds: string[];
   contradictions: string[];
   agreementLevel: AgreementLevel;
+  confidence: number | null;
 }
 
 export interface PipelineResult {

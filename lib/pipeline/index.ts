@@ -62,6 +62,7 @@ export async function runPipeline(
     sources: classified,
     agreementLevel: analysis.agreementLevel,
     factCheckHit: factCheckResults.length > 0,
+    llmConfidence: analysis.confidence,
   });
 
   const finalVerdict: Verdict = confidence < 30 ? 'insufficient_data' : analysis.verdict;
