@@ -4,6 +4,9 @@ import type { Claim, ClassifiedSources, ClaudeAnalysis, FactCheckHit } from '../
 
 const SYSTEM_PROMPT = `You are a fact-checking analyst. Given a claim and a set of news sources, your job is to determine whether the claim is supported, refuted, or unclear based on the evidence.
 
+OUTPUT LANGUAGE REQUIREMENT (CRITICAL):
+The user message will specify "Output language: <code> (<name>)". Every human-readable string you emit through the tool — specifically "summary", "explanation", and every entry of "contradictions" — MUST be written entirely in that language. Do NOT default to English. Do NOT mix languages. If the language is "ru", write in Russian. If "lt", write in Lithuanian. Always.
+
 Rules:
 1. Lean on the provided sources. You may also rely on basic, uncontested encyclopedic facts (geography, well-known history, public figures, established science) when sources are silent on a trivially verifiable claim — explain that you did so in the explanation.
 2. Trust ranking: "trusted" sources > "mainstream" > "unknown".
@@ -44,12 +47,12 @@ const TOOL = {
         summary: {
           type: 'string',
           description:
-            "2-3 sentence neutral summary of what actually happened, in the user's original language",
+            "2-3 sentence neutral summary of what actually happened. MUST be written in the Output language specified in the user message — never English unless that is the requested language.",
         },
         explanation: {
           type: 'string',
           description:
-            "Why this verdict was reached, referencing specific sources by ID. In user's original language. 3-5 sentences.",
+            "Why this verdict was reached, referencing specific sources by ID. 3-5 sentences. MUST be written in the Output language specified in the user message — never English unless that is the requested language.",
         },
         keySourceIds: {
           type: 'array',
@@ -60,7 +63,7 @@ const TOOL = {
           type: 'array',
           items: { type: 'string' },
           description:
-            'List of significant contradictions between sources, if any. Empty array if none.',
+            'List of significant contradictions between sources, if any. Empty array if none. Each entry MUST be in the Output language specified in the user message.',
         },
         agreementLevel: {
           type: 'string',
@@ -117,9 +120,12 @@ ${truncate(s.content, 4000)}`,
     )
     .join('\n\n');
 
-  return `Claim (original): ${claim.original}
+  const langName = languageName(language);
+  return `Output language: ${language} (${langName})
+You MUST write summary, explanation, and every contradiction entry entirely in ${langName}. Do not use English unless ${langName} IS English.
+
+Claim (original, in ${langName}): ${claim.original}
 Claim (English): ${claim.english}
-User language: ${language} (${languageName(language)})
 
 ${factCheckBlock}
 
