@@ -12,6 +12,7 @@ import { ShareModal } from './ShareModal';
 import { adaptResult, type ApiPayload, type DisplayResult } from './adapter';
 import { persistLang } from './langClient';
 import { translateText } from './translateClient';
+import { useIsMobile } from './useIsMobile';
 
 const REANALYZE_TIMEOUT_MS = 75_000;
 
@@ -19,12 +20,15 @@ export function SharedResult({
   result,
   uiLang,
   checkLang,
+  initialIsMobile = false,
 }: {
   result: DisplayResult;
   uiLang: LanguageCode;
   checkLang: LanguageCode;
+  initialIsMobile?: boolean;
 }) {
   const router = useRouter();
+  const isMobile = useIsMobile(initialIsMobile);
   const [lang, setLangRaw] = useState<LanguageCode>(uiLang);
   const [shareOpen, setShareOpen] = useState(false);
   const [reanalyzing, setReanalyzing] = useState(false);
@@ -204,6 +208,7 @@ export function SharedResult({
         onLang={setLang}
         onReset={undefined}
         onShare={() => setShareOpen(true)}
+        compact={isMobile}
       />
       <div
         style={{

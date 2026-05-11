@@ -13,6 +13,7 @@ import { ShareModal } from './ShareModal';
 import { adaptResult, type ApiPayload, type DisplayResult } from './adapter';
 import { persistLang } from './langClient';
 import { translateText } from './translateClient';
+import { useIsMobile } from './useIsMobile';
 
 type AppState = 'empty' | 'loading' | 'result';
 
@@ -21,9 +22,11 @@ const CHECK_TIMEOUT_MS = 75_000;
 interface Props {
   initialLang: LanguageCode;
   initialAutoDetected: boolean;
+  initialIsMobile?: boolean;
 }
 
-export function VerityApp({ initialLang, initialAutoDetected }: Props) {
+export function VerityApp({ initialLang, initialAutoDetected, initialIsMobile = false }: Props) {
+  const isMobile = useIsMobile(initialIsMobile);
   const [lang, setLangRaw] = useState<LanguageCode>(initialLang);
   const [autoDetected, setAutoDetected] = useState(initialAutoDetected);
   const [state, setState] = useState<AppState>('empty');
@@ -256,6 +259,7 @@ export function VerityApp({ initialLang, initialAutoDetected }: Props) {
             onReset={handleReset}
             onShare={() => setShareOpen(true)}
             autoDetected={autoDetected}
+            compact={isMobile}
           />
         </>
       )}

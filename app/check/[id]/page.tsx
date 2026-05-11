@@ -1,9 +1,11 @@
 import { notFound } from 'next/navigation';
+import { headers } from 'next/headers';
 import type { Metadata } from 'next';
 import { prisma } from '@/lib/db/client';
 import { I18N } from '@/lib/i18n/dictionary';
 import { isLanguageCode, type LanguageCode } from '@/lib/i18n/languages';
 import { resolveServerLang } from '@/lib/i18n/serverLang';
+import { isMobileFromUA } from '@/lib/responsive';
 import { adaptResult, type RawSource } from '@/components/verity/adapter';
 import { SharedResult } from '@/components/verity/SharedResult';
 
@@ -73,6 +75,15 @@ export default async function CheckPage({ params }: PageContext) {
     ? check.language
     : 'en';
   const { lang: uiLang } = await resolveServerLang();
+  const ua = (await headers()).get('user-agent');
+  const initialIsMobile = isMobileFromUA(ua);
 
-  return <SharedResult result={result} uiLang={uiLang} checkLang={checkLang} />;
+  return (
+    <SharedResult
+      result={result}
+      uiLang={uiLang}
+      checkLang={checkLang}
+      initialIsMobile={initialIsMobile}
+    />
+  );
 }
