@@ -16,6 +16,8 @@ import { translateText } from './translateClient';
 
 type AppState = 'empty' | 'loading' | 'result';
 
+const CHECK_TIMEOUT_MS = 75_000;
+
 interface Props {
   initialLang: LanguageCode;
   initialAutoDetected: boolean;
@@ -50,6 +52,9 @@ export function VerityApp({ initialLang, initialAutoDetected }: Props) {
     setActiveQuery(query);
     setState('loading');
 
+    const abortCtrl = new AbortController();
+    const timeoutId = setTimeout(() => abortCtrl.abort(), CHECK_TIMEOUT_MS);
+
     try {
       let finalQuery = query;
       if (opts.translate) {
@@ -62,6 +67,7 @@ export function VerityApp({ initialLang, initialAutoDetected }: Props) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: finalQuery, language: requestLang }),
+        signal: abortCtrl.signal,
       });
 
       if (!res.ok) {
@@ -89,7 +95,8 @@ export function VerityApp({ initialLang, initialAutoDetected }: Props) {
       setState('result');
     } catch (err) {
       console.error(err);
-      const msg = t.errorNetwork;
+      const isAbort = err instanceof Error && err.name === 'AbortError';
+      const msg = isAbort ? t.errorTimeout : t.errorNetwork;
       if (state === 'result') {
         setReanalyzeError(msg);
         setState('result');
@@ -97,6 +104,8 @@ export function VerityApp({ initialLang, initialAutoDetected }: Props) {
         setError(msg);
         setState('empty');
       }
+    } finally {
+      clearTimeout(timeoutId);
     }
   };
 
@@ -161,7 +170,7 @@ export function VerityApp({ initialLang, initialAutoDetected }: Props) {
                 maxWidth: 880,
                 margin: '20px auto 0',
                 width: '100%',
-                padding: '0 32px',
+                padding: '0 clamp(16px, 4vw, 32px)',
                 fontFamily: 'var(--font-inter), Inter, sans-serif',
                 display: 'flex',
                 gap: 10,

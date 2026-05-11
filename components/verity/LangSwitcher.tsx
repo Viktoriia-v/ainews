@@ -53,8 +53,8 @@ export function LangSwitcher({ lang, onLang, pos = 'static', autoDetected = fals
       ref={wrapRef}
       style={{
         position: pos === 'absolute' ? 'absolute' : 'relative',
-        top: pos === 'absolute' ? 24 : 'auto',
-        right: pos === 'absolute' ? 24 : 'auto',
+        top: pos === 'absolute' ? 'clamp(12px, 3vw, 24px)' : 'auto',
+        right: pos === 'absolute' ? 'clamp(12px, 3vw, 24px)' : 'auto',
         fontFamily: 'var(--font-inter), Inter, sans-serif',
         zIndex: 30,
       }}
@@ -129,7 +129,7 @@ export function LangSwitcher({ lang, onLang, pos = 'static', autoDetected = fals
             position: 'absolute',
             top: 'calc(100% + 6px)',
             right: 0,
-            width: 240,
+            width: 'min(240px, calc(100vw - 24px))',
             background: '#fff',
             borderRadius: 12,
             border: '1px solid oklch(0.92 0 0)',

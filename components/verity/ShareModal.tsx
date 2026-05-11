@@ -50,7 +50,7 @@ export function ShareModal({
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: 100,
-        padding: 24,
+        padding: 'clamp(12px, 4vw, 24px)',
       }}
     >
       <div
@@ -60,7 +60,7 @@ export function ShareModal({
           borderRadius: 16,
           width: '100%',
           maxWidth: 460,
-          padding: 28,
+          padding: 'clamp(20px, 5vw, 28px)',
           fontFamily: 'var(--font-inter), Inter, sans-serif',
         }}
       >

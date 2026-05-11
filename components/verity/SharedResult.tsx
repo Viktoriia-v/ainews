@@ -13,6 +13,8 @@ import { adaptResult, type ApiPayload, type DisplayResult } from './adapter';
 import { persistLang } from './langClient';
 import { translateText } from './translateClient';
 
+const REANALYZE_TIMEOUT_MS = 75_000;
+
 export function SharedResult({
   result,
   uiLang,
@@ -48,12 +50,15 @@ export function SharedResult({
     if (reanalyzing) return;
     setReanalyzing(true);
     setReanalyzeError(null);
+    const abortCtrl = new AbortController();
+    const timeoutId = setTimeout(() => abortCtrl.abort(), REANALYZE_TIMEOUT_MS);
     try {
       const { translated } = await translateText(result.query, lang);
       const res = await fetch('/api/check', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: translated, language: lang }),
+        signal: abortCtrl.signal,
       });
       if (!res.ok) {
         const body = (await res.json().catch(() => ({}))) as { error?: string };
@@ -69,8 +74,11 @@ export function SharedResult({
       router.refresh();
     } catch (err) {
       console.error(err);
-      setReanalyzeError(t.errorNetwork);
+      const isAbort = err instanceof Error && err.name === 'AbortError';
+      setReanalyzeError(isAbort ? t.errorTimeout : t.errorNetwork);
       setReanalyzing(false);
+    } finally {
+      clearTimeout(timeoutId);
     }
   };
 
@@ -91,7 +99,7 @@ export function SharedResult({
             maxWidth: 880,
             margin: '20px auto 0',
             width: '100%',
-            padding: '0 32px',
+            padding: '0 clamp(16px, 4vw, 32px)',
             fontFamily: 'var(--font-inter), Inter, sans-serif',
             display: 'flex',
             gap: 10,
@@ -201,7 +209,7 @@ export function SharedResult({
         style={{
           maxWidth: 880,
           margin: '0 auto 40px',
-          padding: '0 32px',
+          padding: '0 clamp(16px, 4vw, 32px)',
           width: '100%',
         }}
       >

@@ -3,9 +3,12 @@
 import { useEffect, useState } from 'react';
 import type { UIStrings } from '@/lib/i18n/dictionary';
 
+const SLOW_WARNING_AFTER_MS = 30_000;
+
 export function LoadingPanel({ t, query }: { t: UIStrings; query: string }) {
   const [step, setStep] = useState(0);
   const [scanned, setScanned] = useState(0);
+  const [slow, setSlow] = useState(false);
 
   useEffect(() => {
     const i = setInterval(() => setStep((s) => Math.min(s + 1, 3)), 6000);
@@ -17,8 +20,13 @@ export function LoadingPanel({ t, query }: { t: UIStrings; query: string }) {
     return () => clearInterval(i);
   }, []);
 
+  useEffect(() => {
+    const id = setTimeout(() => setSlow(true), SLOW_WARNING_AFTER_MS);
+    return () => clearTimeout(id);
+  }, []);
+
   return (
-    <div style={{ maxWidth: 720, margin: '0 auto', padding: '40px 32px' }}>
+    <div style={{ maxWidth: 720, margin: '0 auto', padding: '40px clamp(16px, 4vw, 32px)' }}>
       <div
         style={{
           fontSize: 13,
@@ -121,6 +129,39 @@ export function LoadingPanel({ t, query }: { t: UIStrings; query: string }) {
           <b style={{ color: '#111' }}>{scanned}</b> {t.sourcesScanned}
         </span>
       </div>
+      {slow && (
+        <div
+          style={{
+            marginTop: 16,
+            padding: '12px 14px',
+            borderRadius: 10,
+            background: 'oklch(0.97 0.01 80)',
+            border: '1px solid oklch(0.92 0.04 80)',
+            color: '#7a5b1a',
+            fontSize: 13,
+            fontFamily: 'var(--font-inter), Inter, sans-serif',
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: 10,
+          }}
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            style={{ flexShrink: 0, marginTop: 2 }}
+          >
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 6v6l4 2" />
+          </svg>
+          <div>{t.slowResponse}</div>
+        </div>
+      )}
     </div>
   );
 }

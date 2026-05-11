@@ -43,7 +43,9 @@ export function ResultPanel({
       style={{
         maxWidth: 880,
         margin: '0 auto',
-        padding: compact ? '20px 16px 40px' : '28px 32px 60px',
+        padding: compact
+          ? 'clamp(16px, 4vw, 20px) clamp(12px, 4vw, 16px) 40px'
+          : 'clamp(20px, 4vw, 28px) clamp(16px, 4vw, 32px) 60px',
       }}
     >
       <div

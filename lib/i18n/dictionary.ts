@@ -45,6 +45,8 @@ export interface UIStrings {
   reanalyzing: string;
   recentlyChecked: string;
   aiSuggestions: string;
+  slowResponse: string;
+  errorTimeout: string;
 }
 
 export const I18N: Record<LanguageCode, UIStrings> = {
@@ -109,6 +111,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     reanalyzing: 'Translating & re-checking…',
     recentlyChecked: 'Recently checked',
     aiSuggestions: 'AI suggestions',
+    slowResponse: 'Still working — fresh news takes a moment',
+    errorTimeout: 'Request timed out — please try again',
   },
   ru: {
     productName: 'Verity',
@@ -171,6 +175,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     reanalyzing: 'Переводим и перепроверяем…',
     recentlyChecked: 'Уже проверено',
     aiSuggestions: 'Подсказки ИИ',
+    slowResponse: 'Работаем — свежие новости требуют времени',
+    errorTimeout: 'Запрос превысил таймаут — попробуйте ещё раз',
   },
   uk: {
     productName: 'Verity',
@@ -233,6 +239,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     reanalyzing: 'Перекладаємо й перевіряємо…',
     recentlyChecked: 'Вже перевірено',
     aiSuggestions: 'Підказки ШІ',
+    slowResponse: 'Працюємо — свіжі новини потребують часу',
+    errorTimeout: 'Запит перевищив таймаут — спробуйте ще раз',
   },
   lt: {
     productName: 'Verity',
@@ -295,6 +303,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     reanalyzing: 'Verčiame ir tikriname…',
     recentlyChecked: 'Jau patikrinta',
     aiSuggestions: 'DI pasiūlymai',
+    slowResponse: 'Dirbame — naujausioms naujienoms reikia laiko',
+    errorTimeout: 'Užklausa viršijo laiko limitą — bandykite dar kartą',
   },
   de: {
     productName: 'Verity',
@@ -357,6 +367,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     reanalyzing: 'Wird übersetzt & erneut geprüft…',
     recentlyChecked: 'Bereits geprüft',
     aiSuggestions: 'KI-Vorschläge',
+    slowResponse: 'Wird verarbeitet — frische Nachrichten brauchen Zeit',
+    errorTimeout: 'Zeitüberschreitung — bitte erneut versuchen',
   },
   fr: {
     productName: 'Verity',
@@ -419,6 +431,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     reanalyzing: 'Traduction & re-vérification…',
     recentlyChecked: 'Déjà vérifié',
     aiSuggestions: 'Suggestions IA',
+    slowResponse: 'Toujours en cours — les actualités fraîches prennent du temps',
+    errorTimeout: 'Délai dépassé — réessayez',
   },
   es: {
     productName: 'Verity',
@@ -481,6 +495,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     reanalyzing: 'Traduciendo y re-verificando…',
     recentlyChecked: 'Ya verificado',
     aiSuggestions: 'Sugerencias IA',
+    slowResponse: 'Aún trabajando — las noticias recientes tardan',
+    errorTimeout: 'Tiempo agotado — inténtalo de nuevo',
   },
   it: {
     productName: 'Verity',
@@ -542,6 +558,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     reanalyzing: 'Traduzione e ri-verifica…',
     recentlyChecked: 'Già verificato',
     aiSuggestions: 'Suggerimenti IA',
+    slowResponse: 'Ancora in corso — le notizie recenti richiedono tempo',
+    errorTimeout: 'Tempo scaduto — riprova',
   },
   pl: {
     productName: 'Verity',
@@ -603,6 +621,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     reanalyzing: 'Tłumaczenie i ponowna weryfikacja…',
     recentlyChecked: 'Już sprawdzone',
     aiSuggestions: 'Sugestie AI',
+    slowResponse: 'Wciąż pracuje — świeże wiadomości wymagają czasu',
+    errorTimeout: 'Przekroczono czas — spróbuj ponownie',
   },
   pt: {
     productName: 'Verity',
@@ -664,6 +684,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     reanalyzing: 'A traduzir e re-verificar…',
     recentlyChecked: 'Já verificado',
     aiSuggestions: 'Sugestões IA',
+    slowResponse: 'Ainda a processar — notícias recentes levam tempo',
+    errorTimeout: 'Tempo esgotado — tente de novo',
   },
   tr: {
     productName: 'Verity',
@@ -726,6 +748,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     reanalyzing: 'Çevriliyor ve yeniden doğrulanıyor…',
     recentlyChecked: 'Daha önce doğrulandı',
     aiSuggestions: 'YZ önerileri',
+    slowResponse: 'Hâlâ çalışıyor — yeni haberler zaman alır',
+    errorTimeout: 'Zaman aşımı — tekrar deneyin',
   },
   ja: {
     productName: 'Verity',
@@ -788,5 +812,7 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     reanalyzing: '翻訳して再分析中…',
     recentlyChecked: '確認済み',
     aiSuggestions: 'AI 提案',
+    slowResponse: '処理中 — 最新ニュースは時間がかかります',
+    errorTimeout: 'タイムアウト — もう一度お試しください',
   },
 };

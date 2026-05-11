@@ -84,13 +84,13 @@ export function Hero({ t, lang, onLang, onSubmit, autoDetected, prefill = '', er
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '0 32px',
+        padding: '64px clamp(16px, 4vw, 32px)',
         position: 'relative',
         minHeight: 'calc(100vh - 0px)',
       }}
     >
       <LangSwitcher lang={lang} onLang={onLang} pos="absolute" autoDetected={autoDetected} />
-      <div style={{ width: '100%', maxWidth: 640, textAlign: 'center', marginTop: -40 }}>
+      <div style={{ width: '100%', maxWidth: 640, textAlign: 'center' }}>
         <div
           style={{
             display: 'flex',
