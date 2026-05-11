@@ -12,6 +12,7 @@ import { ResultPanel } from './ResultPanel';
 import { ShareModal } from './ShareModal';
 import { adaptResult, type ApiPayload, type DisplayResult } from './adapter';
 import { persistLang } from './langClient';
+import { translateText } from './translateClient';
 
 type AppState = 'empty' | 'loading' | 'result';
 
@@ -39,17 +40,28 @@ export function VerityApp({ initialLang, initialAutoDetected }: Props) {
 
   const t: UIStrings = I18N[lang];
 
-  const runCheck = async (query: string, requestLang: LanguageCode) => {
+  const runCheck = async (
+    query: string,
+    requestLang: LanguageCode,
+    opts: { translate?: boolean } = {},
+  ) => {
     setError(null);
     setReanalyzeError(null);
     setActiveQuery(query);
     setState('loading');
 
     try {
+      let finalQuery = query;
+      if (opts.translate) {
+        const { translated } = await translateText(query, requestLang);
+        finalQuery = translated;
+        setActiveQuery(translated);
+      }
+
       const res = await fetch('/api/check', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query, language: requestLang }),
+        body: JSON.stringify({ query: finalQuery, language: requestLang }),
       });
 
       if (!res.ok) {
@@ -71,7 +83,7 @@ export function VerityApp({ initialLang, initialAutoDetected }: Props) {
       }
 
       const payload = (await res.json()) as ApiPayload;
-      const adapted = adaptResult(payload, query);
+      const adapted = adaptResult(payload, finalQuery);
       setResult(adapted);
       setResultLang(requestLang);
       setState('result');
@@ -90,12 +102,12 @@ export function VerityApp({ initialLang, initialAutoDetected }: Props) {
 
   const handleSubmit = (query: string) => {
     if (state === 'loading') return;
-    runCheck(query, lang);
+    runCheck(query, lang, { translate: true });
   };
 
   const handleReanalyze = () => {
     if (state === 'loading' || !result) return;
-    runCheck(result.query, lang);
+    runCheck(result.query, lang, { translate: true });
   };
 
   const handleReset = () => {

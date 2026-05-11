@@ -11,6 +11,7 @@ import { ResultPanel } from './ResultPanel';
 import { ShareModal } from './ShareModal';
 import { adaptResult, type ApiPayload, type DisplayResult } from './adapter';
 import { persistLang } from './langClient';
+import { translateText } from './translateClient';
 
 export function SharedResult({
   result,
@@ -48,10 +49,11 @@ export function SharedResult({
     setReanalyzing(true);
     setReanalyzeError(null);
     try {
+      const { translated } = await translateText(result.query, lang);
       const res = await fetch('/api/check', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: result.query, language: lang }),
+        body: JSON.stringify({ query: translated, language: lang }),
       });
       if (!res.ok) {
         const body = (await res.json().catch(() => ({}))) as { error?: string };
@@ -62,8 +64,9 @@ export function SharedResult({
         return;
       }
       const payload = (await res.json()) as ApiPayload;
-      const adapted = adaptResult(payload, result.query);
+      const adapted = adaptResult(payload, translated);
       router.push(`/check/${adapted.id}`);
+      router.refresh();
     } catch (err) {
       console.error(err);
       setReanalyzeError(t.errorNetwork);
