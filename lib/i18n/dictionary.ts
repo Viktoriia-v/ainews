@@ -43,6 +43,8 @@ export interface UIStrings {
   notFound: string;
   reanalyzeIn: string;
   reanalyzing: string;
+  recentlyChecked: string;
+  aiSuggestions: string;
 }
 
 export const I18N: Record<LanguageCode, UIStrings> = {
@@ -105,6 +107,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     notFound: 'Result not found',
     reanalyzeIn: 'Re-analyze in',
     reanalyzing: 'Re-analyzing…',
+    recentlyChecked: 'Recently checked',
+    aiSuggestions: 'AI suggestions',
   },
   ru: {
     productName: 'Verity',
@@ -165,6 +169,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     notFound: 'Результат не найден',
     reanalyzeIn: 'Перепроверить на',
     reanalyzing: 'Перепроверяем…',
+    recentlyChecked: 'Уже проверено',
+    aiSuggestions: 'Подсказки ИИ',
   },
   uk: {
     productName: 'Verity',
@@ -225,6 +231,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     notFound: 'Результат не знайдено',
     reanalyzeIn: 'Перевірити на',
     reanalyzing: 'Перевіряємо…',
+    recentlyChecked: 'Вже перевірено',
+    aiSuggestions: 'Підказки ШІ',
   },
   lt: {
     productName: 'Verity',
@@ -285,6 +293,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     notFound: 'Rezultatas nerastas',
     reanalyzeIn: 'Patikrinti',
     reanalyzing: 'Tikriname…',
+    recentlyChecked: 'Jau patikrinta',
+    aiSuggestions: 'DI pasiūlymai',
   },
   de: {
     productName: 'Verity',
@@ -345,6 +355,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     notFound: 'Ergebnis nicht gefunden',
     reanalyzeIn: 'Erneut prüfen in',
     reanalyzing: 'Wird erneut geprüft…',
+    recentlyChecked: 'Bereits geprüft',
+    aiSuggestions: 'KI-Vorschläge',
   },
   fr: {
     productName: 'Verity',
@@ -405,6 +417,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     notFound: 'Résultat introuvable',
     reanalyzeIn: 'Re-vérifier en',
     reanalyzing: 'Re-vérification…',
+    recentlyChecked: 'Déjà vérifié',
+    aiSuggestions: 'Suggestions IA',
   },
   es: {
     productName: 'Verity',
@@ -465,6 +479,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     notFound: 'Resultado no encontrado',
     reanalyzeIn: 'Re-verificar en',
     reanalyzing: 'Re-verificando…',
+    recentlyChecked: 'Ya verificado',
+    aiSuggestions: 'Sugerencias IA',
   },
   it: {
     productName: 'Verity',
@@ -524,6 +540,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     notFound: 'Risultato non trovato',
     reanalyzeIn: 'Ri-verifica in',
     reanalyzing: 'Ri-verifica in corso…',
+    recentlyChecked: 'Già verificato',
+    aiSuggestions: 'Suggerimenti IA',
   },
   pl: {
     productName: 'Verity',
@@ -583,6 +601,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     notFound: 'Nie znaleziono wyniku',
     reanalyzeIn: 'Sprawdź ponownie w',
     reanalyzing: 'Ponowna weryfikacja…',
+    recentlyChecked: 'Już sprawdzone',
+    aiSuggestions: 'Sugestie AI',
   },
   pt: {
     productName: 'Verity',
@@ -642,6 +662,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     notFound: 'Resultado não encontrado',
     reanalyzeIn: 'Re-verificar em',
     reanalyzing: 'A re-verificar…',
+    recentlyChecked: 'Já verificado',
+    aiSuggestions: 'Sugestões IA',
   },
   tr: {
     productName: 'Verity',
@@ -702,6 +724,8 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     notFound: 'Sonuç bulunamadı',
     reanalyzeIn: 'Yeniden doğrula',
     reanalyzing: 'Yeniden doğrulanıyor…',
+    recentlyChecked: 'Daha önce doğrulandı',
+    aiSuggestions: 'YZ önerileri',
   },
   ja: {
     productName: 'Verity',
@@ -762,5 +786,7 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     notFound: '結果が見つかりません',
     reanalyzeIn: '再分析',
     reanalyzing: '再分析中…',
+    recentlyChecked: '確認済み',
+    aiSuggestions: 'AI 提案',
   },
 };
