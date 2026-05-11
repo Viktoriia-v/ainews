@@ -47,6 +47,7 @@ export interface UIStrings {
   aiSuggestions: string;
   slowResponse: string;
   errorTimeout: string;
+  shareVia: string;
 }
 
 export const I18N: Record<LanguageCode, UIStrings> = {
@@ -113,6 +114,7 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     aiSuggestions: 'AI suggestions',
     slowResponse: 'Still working — fresh news takes a moment',
     errorTimeout: 'Request timed out — please try again',
+    shareVia: 'Share via apps',
   },
   ru: {
     productName: 'Verity',
@@ -177,6 +179,7 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     aiSuggestions: 'Подсказки ИИ',
     slowResponse: 'Работаем — свежие новости требуют времени',
     errorTimeout: 'Запрос превысил таймаут — попробуйте ещё раз',
+    shareVia: 'Поделиться через приложение',
   },
   uk: {
     productName: 'Verity',
@@ -241,6 +244,7 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     aiSuggestions: 'Підказки ШІ',
     slowResponse: 'Працюємо — свіжі новини потребують часу',
     errorTimeout: 'Запит перевищив таймаут — спробуйте ще раз',
+    shareVia: 'Поділитися через застосунок',
   },
   lt: {
     productName: 'Verity',
@@ -305,6 +309,7 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     aiSuggestions: 'DI pasiūlymai',
     slowResponse: 'Dirbame — naujausioms naujienoms reikia laiko',
     errorTimeout: 'Užklausa viršijo laiko limitą — bandykite dar kartą',
+    shareVia: 'Dalintis per programas',
   },
   de: {
     productName: 'Verity',
@@ -369,6 +374,7 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     aiSuggestions: 'KI-Vorschläge',
     slowResponse: 'Wird verarbeitet — frische Nachrichten brauchen Zeit',
     errorTimeout: 'Zeitüberschreitung — bitte erneut versuchen',
+    shareVia: 'Über Apps teilen',
   },
   fr: {
     productName: 'Verity',
@@ -433,6 +439,7 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     aiSuggestions: 'Suggestions IA',
     slowResponse: 'Toujours en cours — les actualités fraîches prennent du temps',
     errorTimeout: 'Délai dépassé — réessayez',
+    shareVia: 'Partager via les apps',
   },
   es: {
     productName: 'Verity',
@@ -497,6 +504,7 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     aiSuggestions: 'Sugerencias IA',
     slowResponse: 'Aún trabajando — las noticias recientes tardan',
     errorTimeout: 'Tiempo agotado — inténtalo de nuevo',
+    shareVia: 'Compartir vía apps',
   },
   it: {
     productName: 'Verity',
@@ -560,6 +568,7 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     aiSuggestions: 'Suggerimenti IA',
     slowResponse: 'Ancora in corso — le notizie recenti richiedono tempo',
     errorTimeout: 'Tempo scaduto — riprova',
+    shareVia: 'Condividi via app',
   },
   pl: {
     productName: 'Verity',
@@ -623,6 +632,7 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     aiSuggestions: 'Sugestie AI',
     slowResponse: 'Wciąż pracuje — świeże wiadomości wymagają czasu',
     errorTimeout: 'Przekroczono czas — spróbuj ponownie',
+    shareVia: 'Udostępnij przez aplikację',
   },
   pt: {
     productName: 'Verity',
@@ -686,6 +696,7 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     aiSuggestions: 'Sugestões IA',
     slowResponse: 'Ainda a processar — notícias recentes levam tempo',
     errorTimeout: 'Tempo esgotado — tente de novo',
+    shareVia: 'Partilhar via apps',
   },
   tr: {
     productName: 'Verity',
@@ -750,6 +761,7 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     aiSuggestions: 'YZ önerileri',
     slowResponse: 'Hâlâ çalışıyor — yeni haberler zaman alır',
     errorTimeout: 'Zaman aşımı — tekrar deneyin',
+    shareVia: 'Uygulamayla paylaş',
   },
   ja: {
     productName: 'Verity',
@@ -814,5 +826,6 @@ export const I18N: Record<LanguageCode, UIStrings> = {
     aiSuggestions: 'AI 提案',
     slowResponse: '処理中 — 最新ニュースは時間がかかります',
     errorTimeout: 'タイムアウト — もう一度お試しください',
+    shareVia: 'アプリで共有',
   },
 };
