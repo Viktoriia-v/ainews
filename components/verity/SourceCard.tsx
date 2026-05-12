@@ -18,10 +18,12 @@ export function SourceCard({
   source,
   t,
   compact = false,
+  number,
 }: {
   source: DisplaySource;
   t: UIStrings;
   compact?: boolean;
+  number?: number;
 }) {
   const stanceColor = STANCE_COLORS[source.stance];
   const stanceLabel = t[source.stance];
@@ -29,6 +31,7 @@ export function SourceCard({
 
   return (
     <a
+      id={`source-${source.id}`}
       href={source.url}
       target="_blank"
       rel="noopener noreferrer"
@@ -42,7 +45,8 @@ export function SourceCard({
         alignItems: 'flex-start',
         textDecoration: 'none',
         color: 'inherit',
-        transition: 'border-color 0.15s, box-shadow 0.15s',
+        transition: 'border-color 0.15s, box-shadow 0.15s, background 0.6s',
+        scrollMarginTop: 24,
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.borderColor = 'oklch(0.85 0 0)';
@@ -53,6 +57,28 @@ export function SourceCard({
         e.currentTarget.style.boxShadow = 'none';
       }}
     >
+      {number !== undefined && (
+        <span
+          aria-hidden
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: compact ? 20 : 22,
+            height: compact ? 20 : 22,
+            borderRadius: 6,
+            background: 'oklch(0.95 0 0)',
+            color: '#666',
+            fontSize: 11,
+            fontWeight: 600,
+            fontFamily: 'var(--font-jetbrains-mono), "JetBrains Mono", monospace',
+            flexShrink: 0,
+            marginTop: 2,
+          }}
+        >
+          {number}
+        </span>
+      )}
       <Favicon swatch={swatch} size={compact ? 24 : 30} />
       <div style={{ flex: 1, minWidth: 0 }}>
         <div

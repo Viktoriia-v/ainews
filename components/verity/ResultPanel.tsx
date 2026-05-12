@@ -1,5 +1,6 @@
 'use client';
 
+import { Fragment, useMemo, type ReactNode } from 'react';
 import type { LanguageCode } from '@/lib/i18n/languages';
 import type { UIStrings } from '@/lib/i18n/dictionary';
 import {
@@ -12,6 +13,74 @@ import {
 import { LangSwitcher } from './LangSwitcher';
 import { SourceCard } from './SourceCard';
 import type { DisplayResult } from './adapter';
+
+const SRC_REGEX = /\(?\[?((?:src_[a-z0-9]+)(?:\s*[,;]\s*src_[a-z0-9]+)*)\]?\)?/g;
+
+function scrollToSource(id: string): void {
+  if (typeof document === 'undefined') return;
+  const el = document.getElementById(`source-${id}`);
+  if (!el) return;
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  const original = el.style.boxShadow;
+  el.style.boxShadow = '0 0 0 3px oklch(0.78 0.10 250)';
+  setTimeout(() => {
+    el.style.boxShadow = original;
+  }, 1400);
+}
+
+function renderCited(text: string, idToNumber: Map<string, number>): ReactNode {
+  if (!text) return text;
+  const parts: ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  let key = 0;
+  SRC_REGEX.lastIndex = 0;
+  while ((match = SRC_REGEX.exec(text)) !== null) {
+    const ids = match[1].split(/[\s,;]+/).filter(Boolean);
+    const refs = ids
+      .map((id) => ({ id, num: idToNumber.get(id) }))
+      .filter((r): r is { id: string; num: number } => typeof r.num === 'number');
+    if (refs.length === 0) continue;
+    if (match.index > lastIndex) {
+      const before = text.slice(lastIndex, match.index).replace(/[\s ]+$/, ' ');
+      parts.push(<Fragment key={`t-${key++}`}>{before}</Fragment>);
+    }
+    parts.push(
+      <span
+        key={`c-${key++}`}
+        style={{ whiteSpace: 'nowrap', display: 'inline-flex', gap: 2 }}
+      >
+        {refs.map((r) => (
+          <button
+            key={r.id}
+            type="button"
+            onClick={() => scrollToSource(r.id)}
+            style={{
+              border: 'none',
+              background: 'oklch(0.96 0.02 250)',
+              color: 'oklch(0.45 0.13 250)',
+              borderRadius: 4,
+              padding: '0 5px',
+              fontFamily: 'var(--font-jetbrains-mono), "JetBrains Mono", monospace',
+              fontSize: '0.85em',
+              fontWeight: 600,
+              cursor: 'pointer',
+              lineHeight: 1.4,
+              verticalAlign: 'baseline',
+            }}
+          >
+            {r.num}
+          </button>
+        ))}
+      </span>,
+    );
+    lastIndex = SRC_REGEX.lastIndex;
+  }
+  if (lastIndex < text.length) {
+    parts.push(<Fragment key={`t-${key++}`}>{text.slice(lastIndex)}</Fragment>);
+  }
+  return parts.length > 0 ? parts : text;
+}
 
 interface Props {
   t: UIStrings;
@@ -37,6 +106,12 @@ export function ResultPanel({
   const theme = VERDICT_THEME[result.verdict];
   const used = result.sources.filter((s) => s.stance !== 'neutral');
   const others = result.sources.filter((s) => s.stance === 'neutral');
+  const idToNumber = useMemo(() => {
+    const m = new Map<string, number>();
+    [...used, ...others].forEach((s, i) => m.set(s.id, i + 1));
+    return m;
+  }, [used, others]);
+  const numberFor = (id: string) => idToNumber.get(id);
 
   return (
     <div
@@ -177,7 +252,7 @@ export function ResultPanel({
               letterSpacing: -0.4,
             }}
           >
-            {result.summary}
+            {renderCited(result.summary, idToNumber)}
           </div>
         </div>
       </div>
@@ -235,7 +310,7 @@ export function ResultPanel({
               marginBottom: 24,
             }}
           >
-            {result.summary}
+            {renderCited(result.summary, idToNumber)}
           </div>
 
           <SectionLabel>{t.why}</SectionLabel>
@@ -248,7 +323,7 @@ export function ResultPanel({
               whiteSpace: 'pre-wrap',
             }}
           >
-            {result.explanation}
+            {renderCited(result.explanation, idToNumber)}
           </div>
         </div>
 
@@ -277,7 +352,7 @@ export function ResultPanel({
                     fontFamily: 'var(--font-inter), Inter, sans-serif',
                   }}
                 >
-                  {c}
+                  {renderCited(c, idToNumber)}
                 </li>
               ))}
             </ul>
@@ -293,7 +368,7 @@ export function ResultPanel({
           </SectionLabel>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {used.map((s) => (
-              <SourceCard key={s.id} source={s} t={t} />
+              <SourceCard key={s.id} source={s} t={t} number={numberFor(s.id)} />
             ))}
           </div>
         </div>
@@ -307,7 +382,13 @@ export function ResultPanel({
           </SectionLabel>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {others.map((s) => (
-              <SourceCard key={s.id} source={s} t={t} compact />
+              <SourceCard
+                key={s.id}
+                source={s}
+                t={t}
+                compact
+                number={numberFor(s.id)}
+              />
             ))}
           </div>
         </div>
