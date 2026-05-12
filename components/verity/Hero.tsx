@@ -24,10 +24,29 @@ interface Props {
 
 const SUGGEST_MIN_CHARS = 3;
 const SUGGEST_DEBOUNCE_MS = 300;
+const EXAMPLES_TO_SHOW = 3;
+
+function shufflePick<T>(arr: readonly T[], n: number): T[] {
+  const copy = arr.slice();
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy.slice(0, n);
+}
 
 export function Hero({ t, lang, onLang, onSubmit, autoDetected, prefill = '', error }: Props) {
   const router = useRouter();
   const [val, setVal] = useState(prefill);
+  const [exampleSeed, setExampleSeed] = useState(0);
+  const examplePicks =
+    exampleSeed === 0
+      ? t.examples.slice(0, EXAMPLES_TO_SHOW)
+      : shufflePick(t.examples, EXAMPLES_TO_SHOW);
+
+  useEffect(() => {
+    setExampleSeed(Date.now());
+  }, [lang, t.examples]);
   const [focused, setFocused] = useState(false);
   const [suggest, setSuggest] = useState<SuggestData>({ db: [], llm: [] });
   const [loading, setLoading] = useState(false);
@@ -235,7 +254,7 @@ export function Hero({ t, lang, onLang, onSubmit, autoDetected, prefill = '', er
             >
               {t.suggestions}:
             </span>
-            {t.examples.map((ex) => (
+            {examplePicks.map((ex) => (
               <button
                 key={ex}
                 type="button"
