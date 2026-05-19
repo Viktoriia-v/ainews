@@ -1,7 +1,6 @@
 export type SourceCategory = 'trusted' | 'mainstream' | 'unknown' | 'unreliable';
 
 export const SOURCE_RATINGS: Record<string, SourceCategory> = {
-  // === TRUSTED (international, high standards) ===
   'reuters.com': 'trusted',
   'apnews.com': 'trusted',
   'bbc.com': 'trusted',
@@ -18,7 +17,6 @@ export const SOURCE_RATINGS: Record<string, SourceCategory> = {
   'pbs.org': 'trusted',
   'bellingcat.com': 'trusted',
 
-  // === EN MAINSTREAM ===
   'cnn.com': 'mainstream',
   'cbsnews.com': 'mainstream',
   'nbcnews.com': 'mainstream',
@@ -28,7 +26,6 @@ export const SOURCE_RATINGS: Record<string, SourceCategory> = {
   'axios.com': 'mainstream',
   'theatlantic.com': 'mainstream',
 
-  // === UK (Ukrainian) ===
   'suspilne.media': 'trusted',
   'pravda.com.ua': 'trusted',
   'radiosvoboda.org': 'trusted',
@@ -43,7 +40,6 @@ export const SOURCE_RATINGS: Record<string, SourceCategory> = {
   'lb.ua': 'mainstream',
   'epravda.com.ua': 'mainstream',
 
-  // === RU (Russian, independent) ===
   'meduza.io': 'trusted',
   'novayagazeta.eu': 'trusted',
   'svoboda.org': 'trusted',
@@ -51,14 +47,12 @@ export const SOURCE_RATINGS: Record<string, SourceCategory> = {
   'theins.ru': 'mainstream',
   'republic.ru': 'mainstream',
 
-  // === LT (Lithuanian) ===
   'lrt.lt': 'trusted',
   'delfi.lt': 'mainstream',
   '15min.lt': 'mainstream',
   'bns.lt': 'mainstream',
   'lrytas.lt': 'mainstream',
 
-  // === PL (Polish) ===
   'tvn24.pl': 'trusted',
   'wyborcza.pl': 'trusted',
   'rp.pl': 'trusted',
@@ -68,7 +62,6 @@ export const SOURCE_RATINGS: Record<string, SourceCategory> = {
   'polsatnews.pl': 'mainstream',
   'notesfrompoland.com': 'mainstream',
 
-  // === FR (French) ===
   'lemonde.fr': 'trusted',
   'liberation.fr': 'trusted',
   'france24.com': 'trusted',
@@ -77,7 +70,6 @@ export const SOURCE_RATINGS: Record<string, SourceCategory> = {
   'francetvinfo.fr': 'mainstream',
   'lesechos.fr': 'mainstream',
 
-  // === DE (German) ===
   'dw.com': 'trusted',
   'spiegel.de': 'trusted',
   'sueddeutsche.de': 'trusted',
@@ -86,7 +78,6 @@ export const SOURCE_RATINGS: Record<string, SourceCategory> = {
   'tagesschau.de': 'trusted',
   'welt.de': 'mainstream',
 
-  // === IT (Italian) ===
   'ansa.it': 'trusted',
   'rainews.it': 'trusted',
   'repubblica.it': 'mainstream',
@@ -94,7 +85,6 @@ export const SOURCE_RATINGS: Record<string, SourceCategory> = {
   'ilsole24ore.com': 'mainstream',
   'lastampa.it': 'mainstream',
 
-  // === ES (Spanish) ===
   'elpais.com': 'trusted',
   'efe.com': 'trusted',
   'rtve.es': 'trusted',
@@ -102,7 +92,6 @@ export const SOURCE_RATINGS: Record<string, SourceCategory> = {
   'abc.es': 'mainstream',
   'lavanguardia.com': 'mainstream',
 
-  // === UNRELIABLE (drop from results) ===
   'rt.com': 'unreliable',
   'sputniknews.com': 'unreliable',
   'tass.ru': 'unreliable',
